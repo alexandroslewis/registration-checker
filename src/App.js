@@ -123,7 +123,7 @@ const Content = () => {
   return (
     <div>
       <p>You need to be signed into osjp@uoregon.edu to use this app. You are currently signed into {accounts[0].username}</p>
-      <p>If you don't see osjp@uoregon.edu as an option in the sign in popup, you need to first login <a href="https://login.live.com/" target="_blank">here</a>.</p>
+      <p>If you don't see osjp@uoregon.edu as an option in the sign in popup, you need to first login <a href="https://outlook.live.com/owa/?nlp=1" target="_blank">here</a>.</p>
     </div >
   );
 };
