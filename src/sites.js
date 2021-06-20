@@ -19,6 +19,7 @@ const sites = [
   },
   { label: "JA5: Shepherd of the Valley ", value: "Shepherd of the Valley" },
   { label: "JA6: Ashland High School", value: "Ashland High School" },
+  { label: "JA7: La Placita", value: "La Placita" },
   {
     label: "JE1: Saint Patrick Catholic Church",
     value: "Saint Patrick Catholic Church",

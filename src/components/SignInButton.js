@@ -6,10 +6,13 @@ import Button from "@material-ui/core/Button";
 export const SignInButton = () => {
     const { instance } = useMsal();
 
-    const handleLogin = (loginType) => {
-        instance.loginPopup(loginRequest).catch(e => {
-            console.log(e);
-        });
+    const handleLogin = async() => {
+        try {
+            await instance.loginPopup(loginRequest);
+            console.log(res)
+        } catch(e) {
+            console.log(e)
+        }        
     }
     return (
         <Button variant="contained" color="default" onClick={() => handleLogin()}>
