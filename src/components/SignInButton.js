@@ -9,7 +9,6 @@ export const SignInButton = () => {
     const handleLogin = async() => {
         try {
             await instance.loginPopup(loginRequest);
-            console.log(res)
         } catch(e) {
             console.log(e)
         }        
