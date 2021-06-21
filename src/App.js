@@ -37,22 +37,24 @@ const Content = () => {
       });
       const data = await callMsGraph(response.accessToken, "/messages");
       const date = new Date().toLocaleDateString();
-      const currLocMailData = data.value.reduce((carry, mail) => {
-        if (
-          mail.from &&
-          mail.from.emailAddress.address === "qualtricssurvey@uoregon.edu"
-        ) {
-          if (mail.body.content.includes(site)) {
-            const mailDate = new Date(mail.sentDateTime).toLocaleDateString();
-            if (date === mailDate) {
-              carry.push(mail);
+      const currLocMailData = data.value
+        .reduce((carry, mail) => {
+          if (
+            mail.from &&
+            mail.from.emailAddress.address === "qualtricssurvey@uoregon.edu"
+          ) {
+            if (mail.body.content.includes(site)) {
+              const mailDate = new Date(mail.sentDateTime).toLocaleDateString();
+              if (date === mailDate) {
+                carry.push(mail);
+              }
             }
           }
-        }
-        return carry;
-      }, []).sort((a, b) => new Date(a.sentDateTime) - new Date(b.sentDateTime));
+          return carry;
+        }, [])
+        .sort((a, b) => new Date(a.sentDateTime) - new Date(b.sentDateTime));
       if (currLocMailData.length > 0) {
-        const newData = currLocMailData.map(mail => {
+        const newData = currLocMailData.map((mail) => {
           const arr = mail.body.content.split("Name:");
           const name = arr[arr.length - 1].split("<")[0];
           return name;
@@ -60,8 +62,8 @@ const Content = () => {
         setMessage(null);
         setNameData(newData);
       } else {
-        setNameData([])
-        setMessage(`No registered names found for ${site}`)
+        setNameData([]);
+        setMessage(`No registered names found for ${site}`);
       }
     } catch (e) {
       return setMessage(e.message);
@@ -76,7 +78,7 @@ const Content = () => {
     setMessage(null);
     setNameData([]);
     setError(null);
-  }
+  };
 
   const names = nameData.map((name, index) => {
     return (
@@ -89,7 +91,14 @@ const Content = () => {
   if (accounts[0].username === "osjp@uoregon.edu") {
     return (
       <div>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginBottom: "40px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            marginBottom: "40px",
+          }}
+        >
           <AutoComplete
             id="site-input"
             options={sites}
@@ -104,31 +113,32 @@ const Content = () => {
               />
             )}
           />
-          {error &&
-            <div
-              style={{ width: "100%", color: "red" }}>
-              {error}
-            </div>
-          }
+          {error && <div style={{ width: "100%", color: "red" }}>{error}</div>}
         </div>
         <Button variant="contained" color="primary" onClick={RequestNameData}>
           Request Registered Names
         </Button>
         <hr></hr>
         <ol style={{ marginTop: "15px" }}>{names}</ol>
-        {names.length === 0 && message &&
-          <div>
-            {message}
-          </div>
-        }
+        {names.length === 0 && message && <div>{message}</div>}
       </div>
     );
   }
   return (
     <div>
-      <p>You need to be signed into osjp@uoregon.edu to use this app. You are currently signed into {accounts[0].username}</p>
-      <p>If you don't see osjp@uoregon.edu as an option in the sign in popup, you need to first login <a href="https://outlook.live.com/owa/?nlp=1" target="_blank">here</a>.</p>
-    </div >
+      <p>
+        You need to be signed into osjp@uoregon.edu to use this app. You are
+        currently signed into {accounts[0].username}
+      </p>
+      <p>
+        If you don't see osjp@uoregon.edu as an option in the sign in popup, you
+        need to first login{" "}
+        <a href="https://outlook.live.com/owa/?nlp=1" target="_blank">
+          here
+        </a>
+        .
+      </p>
+    </div>
   );
 };
 
