@@ -20,6 +20,7 @@ const sites = [
   { label: "JA5: Shepherd of the Valley ", value: "Shepherd of the Valley" },
   { label: "JA6: Ashland High School", value: "Ashland High School" },
   { label: "JA7: La Placita", value: "La Placita" },
+  { label: "JA8: ", value: "Twin Creeks Park (Ballet Folklorico) " },
   {
     label: "JE1: Saint Patrick Catholic Church",
     value: "Saint Patrick Catholic Church",
@@ -55,6 +56,8 @@ const sites = [
     value: "Junction City High School",
   },
   { label: "LA5: Cascade Middle School", value: "Cascade Middle School" },
+  { label: "LA7: Alluvium Church", value: "Alluvium Church" },
+  { label: "LA8: Arc of Lane County", value: "Arc of Lane County" },
   { label: "LA9: Churchill High School", value: "Churchill High School" },
   { label: "LI1: Newport Middle School", value: "Newport Middle School" },
   {
@@ -65,6 +68,7 @@ const sites = [
     label: "LI3: Church of the Nazarene",
     value: "Church of the Nazarene",
   },
+  { label: "LI4: La Juquilita", value: "La Juquilita" },
   { label: "MA1: Gervais High School", value: "Gervais High School" },
   {
     label: "MA2: Regis Catholic High School",
@@ -93,6 +97,7 @@ const sites = [
   },
   { label: "UM5: Umatilla Electric", value: "Umatilla Electric" },
   { label: "UM6: BMCC Milton Freewater", value: "BMCC Milton Freewater" },
+  { label: "UM7: Earl and Brown and Sons", value: "Earl and Brown and Sons" },
   {
     label: "MC2: Clara Brownell Middle School",
     value: "Clara Brownell Middle School",
