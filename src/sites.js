@@ -55,6 +55,7 @@ const sites = [
     value: "Junction City High School",
   },
   { label: "LA5: Cascade Middle School", value: "Cascade Middle School" },
+  { label: "LA9: Churchill High School", value: "Churchill High School" },
   { label: "LI1: Newport Middle School", value: "Newport Middle School" },
   {
     label: "LI2: Lincoln Community Center Parking Lot",
