@@ -35,8 +35,8 @@ const Content = () => {
         ...loginRequest,
         account: accounts[0],
       });
-      const data = await callMsGraph(response.accessToken, "/messages");
-      const date = new Date().toLocaleDateString();
+      const date = new Date().toISOString().split("T")[0];
+      const data = await callMsGraph(response.accessToken, `/messages?$top=200&$skip=0&$filter=receivedDateTime ge ${date}`);
       const currLocMailData = data.value
         .reduce((carry, mail) => {
           if (
@@ -44,21 +44,17 @@ const Content = () => {
             mail.from.emailAddress.address === "qualtricssurvey@uoregon.edu"
           ) {
             if (mail.body.content.includes(site)) {
-              const mailDate = new Date(mail.sentDateTime).toLocaleDateString();
-              if (date === mailDate) {
-                carry.push(mail);
-              }
+              carry.push(mail);
             }
           }
           return carry;
-        }, [])
-        .sort((a, b) => new Date(a.sentDateTime) - new Date(b.sentDateTime));
+        }, []);
       if (currLocMailData.length > 0) {
         const newData = currLocMailData.map((mail) => {
           const arr = mail.body.content.split("Name:");
           const name = arr[arr.length - 1].split("<")[0];
           return name;
-        });
+        }).sort();
         setMessage(null);
         setNameData(newData);
       } else {
