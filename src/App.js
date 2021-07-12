@@ -35,8 +35,9 @@ const Content = () => {
         ...loginRequest,
         account: accounts[0],
       });
-      const date = new Date().toISOString().split("T")[0];
-      const data = await callMsGraph(response.accessToken, `/messages?$top=200&$skip=0&$filter=receivedDateTime ge ${date}`);
+      const date = new Date().toLocaleDateString();
+      const data = await callMsGraph(response.accessToken, `/messages?$top=200&$skip=0`);
+      console.log(data)
       const currLocMailData = data.value
         .reduce((carry, mail) => {
           if (
@@ -44,7 +45,10 @@ const Content = () => {
             mail.from.emailAddress.address === "qualtricssurvey@uoregon.edu"
           ) {
             if (mail.body.content.includes(site)) {
-              carry.push(mail);
+              const mailDate = new Date(mail.sentDateTime).toLocaleDateString();
+              if (date === mailDate) {
+                carry.push(mail);
+              }
             }
           }
           return carry;
