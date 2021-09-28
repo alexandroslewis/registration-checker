@@ -10,6 +10,7 @@ import { callMsGraph } from "./graph";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import AutoComplete from "@material-ui/lab/Autocomplete";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import "./styles/App.css";
 import sites from "./sites";
 
@@ -18,6 +19,7 @@ const Content = () => {
   const [nameData, setNameData] = useState([]);
   const [site, setSite] = useState(null);
   const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const RequestNameData = async () => {
@@ -31,13 +33,15 @@ const Content = () => {
       if (error) {
         setError(null);
       }
+      setLoading(true);
+      setMessage(null);
+      setNameData([]);
       const response = await instance.acquireTokenSilent({
         ...loginRequest,
         account: accounts[0],
       });
       const date = new Date().toLocaleDateString();
       const data = await callMsGraph(response.accessToken, `/messages?$top=200&$skip=0`);
-      console.log(data)
       const currLocMailData = data.value
         .reduce((carry, mail) => {
           if (
@@ -55,17 +59,20 @@ const Content = () => {
         }, []);
       if (currLocMailData.length > 0) {
         const newData = currLocMailData.map((mail) => {
-          const arr = mail.body.content.split("Name:");
-          const name = arr[arr.length - 1].split("<")[0];
+          const arr = mail.body.content.split("Participant Name:");
+          const name = arr[arr.length - 1].split("<")[0].trim();
           return name;
         }).sort();
+        setLoading(false);
         setMessage(null);
         setNameData(newData);
       } else {
+        setLoading(false);
         setNameData([]);
         setMessage(`No registered names found for ${site}`);
       }
     } catch (e) {
+      setLoading(false);
       return setMessage(e.message);
     }
   };
@@ -119,6 +126,7 @@ const Content = () => {
           Request Registered Names
         </Button>
         <hr></hr>
+        {loading && <div style={{ width: "400px",margin: "auto", padding: "20px" }}><LinearProgress/></div>}
         <ol style={{ marginTop: "15px" }}>{names}</ol>
         {names.length === 0 && message && <div>{message}</div>}
       </div>
